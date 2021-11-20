@@ -1,0 +1,20 @@
+{
+  "name": "dinojumpjump",
+  "description": "dinojumpgame",
+  "version": "1.0.0",
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "node-telegram-bot-api": "^0.54.0"
+  },
+  "main": "t-rex-runner-gh-pages/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node t-rex-runner-gh-pages/index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
