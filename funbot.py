@@ -1,3 +1,4 @@
+import requests
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import Application, CommandHandler, ContextTypes
 from dotenv import load_dotenv
@@ -7,8 +8,40 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_API")
 WEB_APP = os.getenv("WEBAPP")
+SESSION_API = os.getenv("SESSION_API")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+
+    # response = requests.post(SESSION_API, json={"user_id": user_id})
+    # allowed = response.json().get("allowed")
+    response = requests.post(SESSION_API, json={"user_id": user_id})
+
+    print("Status code:", response.status_code)
+    print("Response text:", response.text)  # <-- check this!
+    try:
+        allowed = response.json().get("allowed")
+    except Exception as e:
+        print("Failed to parse JSON:", e)
+        allowed = False
+
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            allowed = data.get("allowed", False)
+        except Exception as e:
+            print("JSON error:", e)
+            allowed = False
+    else:
+        print(f"Request failed: {response.status_code}")
+        allowed = False
+
+
+    # Prevent multiple sessions
+    if not allowed:
+        await update.message.reply_text("🚫 The app is currently in use by another user.")
+        return
+
     keyboard = [
         [InlineKeyboardButton(text="Open CoolApp 🚀", web_app=WebAppInfo(url=WEB_APP))]
     ]
