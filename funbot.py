@@ -13,6 +13,7 @@ SESSION_API = os.getenv("SESSION_API")
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
 
+    # Bug: Always allowed to start a new session. have to implement this in the back end.
     # response = requests.post(SESSION_API, json={"user_id": user_id})
     # allowed = response.json().get("allowed")
     response = requests.post(SESSION_API, json={"user_id": user_id})
