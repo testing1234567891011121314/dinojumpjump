@@ -1,10 +1,10 @@
+// This is the entry point to the app.
+import TelegramMiniApp from '../components/TelegramMiniApp';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div>
-      <main>
-        <h1>Hello world!</h1>
-      </main>
-    </div>
+    <main>
+      <TelegramMiniApp /> 
+    </main>
   );
 }
