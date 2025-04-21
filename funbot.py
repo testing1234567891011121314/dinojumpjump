@@ -42,6 +42,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not allowed:
         await update.message.reply_text("🚫 The app is currently in use by another user.")
         return
+    
+    if update.message.chat.type != "private":
+        await update.message.reply_text("❌ Web App can only be launched in a private chat. Please DM me!")
+        return
 
     keyboard = [
         [InlineKeyboardButton(text="Open CoolApp 🚀", web_app=WebAppInfo(url=WEB_APP))]
